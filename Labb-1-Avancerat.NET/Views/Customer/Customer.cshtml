@@ -1,7 +1,95 @@
-﻿@model Customer
+﻿@model CustomerBooksViewModel
+
+<div class="container my-5">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+        <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+            <h1 class="display-4 fw-bold lh-1">@Model.Customer.FirstName @Model.Customer.LastName</h1>
+            <h4 class="display-5 fw-bold lh-1 md-3">@Model.Customer.CustomerId</h4>
+            <p class="lead">@Model.Customer.Email</p>
+        </div>
+        <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+            <img class="rounded-lg-3" src="" alt="" width="720">
+        </div>
+    </div>
+</div>
+<div class="container my-5">
+    <h1>Books</h1>
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Loaned
+                    </th>
+                    <th>
+                        Return
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var item in Model.LoanOrders)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Book.BookId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Book.BookTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Book.Category.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateOfLoan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateOfReturn)
+                    </td>
+                    <td>
+                        <form asp-controller="Loan" asp-action="Delete" asp-route-id="@item.LoanOrderId">
+                            <div class="btn-group btn-group-sm">
+                                <a asp-controller="Loan" asp-action="LoanOrder" asp-route-id="@item.LoanOrderId" class="btn btn-info">
+                                    Details
+                                </a>
+                                <button type="submit" class="btn btn-dark" onclick="return confirm('Are you sure you want to return this book?')">
+                                    Return
+                                </button>
+
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                }
+            </tbody>
+
+            
+        </table>
+
+    </div>
+</div>
 
 
-<h3>Customer</h3>
-<p>@Model.FirstName</p>
-<p>@Model.LastName</p>
+
+@*<div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h3>Customer</h3>
+            <p>ID: @Model.CustomerId</p>
+            <p>NAME: @Model.FirstName @Model.LastName</p>
+            <p>Email: @Model.Email</p>
+        </div>
+    </div>*@
+
+
+
 

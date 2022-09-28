@@ -1,0 +1,62 @@
+﻿@model IEnumerable<LoanOrder>
+
+<div class="container my-5">
+    <h1>Loans</h1>
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Loaner
+                    </th>
+                    <th>
+                        <a asp-action="AddLoanOrder" class="btn btn-sm btn-primary">
+                            <i class="fa-solid fa-plus"></i> Låna bok
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BookId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Book.BookTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Book.Category.CategoryName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customer.FirstName) @Html.DisplayFor(modelItem => item.Customer.LastName)
+                        </td>
+                        <td>
+                            <form asp-action="Delete" asp-route-id="@item.LoanOrderId">
+                                <div class="btn-group btn-group-sm">
+                                    <a asp-action="LoanOrder" asp-route-id="@item.LoanOrderId" class="btn btn-info">
+                                        Details
+                                    </a>
+                                    <button type="submit" class="btn btn-dark" onclick="return confirm('Are you sure you want to return this book?')">
+                                        Return
+                                    </button>
+
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

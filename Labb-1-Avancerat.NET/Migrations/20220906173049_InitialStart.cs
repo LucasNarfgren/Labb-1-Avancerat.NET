@@ -2,7 +2,7 @@
 
 namespace Labb_1_Avancerat.NET.Migrations
 {
-    public partial class start : Migration
+    public partial class InitialStart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -4,14 +4,16 @@ using Labb_1_Avancerat.NET.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Labb_1_Avancerat.NET.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220928082210_addingListtoReturnedBooks")]
+    partial class addingListtoReturnedBooks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,13 +112,11 @@ namespace Labb_1_Avancerat.NET.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerId");
 
@@ -151,13 +151,36 @@ namespace Labb_1_Avancerat.NET.Migrations
                     b.Property<DateTime>("DateOfReturn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ReturnBookReturnedBooksId")
+                        .HasColumnType("int");
+
                     b.HasKey("LoanOrderId");
 
                     b.HasIndex("BookId");
 
                     b.HasIndex("CustomerId");
 
+                    b.HasIndex("ReturnBookReturnedBooksId");
+
                     b.ToTable("LoanOrders");
+                });
+
+            modelBuilder.Entity("Labb_1_Avancerat.NET.Models.ReturnBook", b =>
+                {
+                    b.Property<int>("ReturnedBooksId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("ReturnedBooksId");
+
+                    b.ToTable("ReturnBooks");
+
+                    b.HasData(
+                        new
+                        {
+                            ReturnedBooksId = 1
+                        });
                 });
 
             modelBuilder.Entity("Labb_1_Avancerat.NET.Models.Book", b =>
@@ -182,6 +205,10 @@ namespace Labb_1_Avancerat.NET.Migrations
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Labb_1_Avancerat.NET.Models.ReturnBook", null)
+                        .WithMany("LoanOrders")
+                        .HasForeignKey("ReturnBookReturnedBooksId");
                 });
 #pragma warning restore 612, 618
         }

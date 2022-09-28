@@ -1,4 +1,6 @@
 using Labb_1_Avancerat.NET.Models;
+using Labb_1_Avancerat.NET.Models.Interfaces;
+using Labb_1_Avancerat.NET.Models.Repositorys;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +31,8 @@ namespace Labb_1_Avancerat.NET
                     options.UseSqlServer(Configuration.GetConnectionString("Connection")));
 
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<ILoanOrderRepository, LoanOrderRepository>();
             services.AddControllersWithViews();
 
 

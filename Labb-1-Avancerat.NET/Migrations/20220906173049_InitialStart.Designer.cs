@@ -4,14 +4,16 @@ using Labb_1_Avancerat.NET.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Labb_1_Avancerat.NET.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220906173049_InitialStart")]
+    partial class InitialStart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,18 +29,19 @@ namespace Labb_1_Avancerat.NET.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("BookTitle")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
 
                     b.HasKey("BookId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Books");
 
@@ -71,9 +74,7 @@ namespace Labb_1_Avancerat.NET.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CategoryId");
 
@@ -105,18 +106,13 @@ namespace Labb_1_Avancerat.NET.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerId");
 
@@ -132,34 +128,6 @@ namespace Labb_1_Avancerat.NET.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Labb_1_Avancerat.NET.Models.LoanOrder", b =>
-                {
-                    b.Property<int>("LoanOrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateOfLoan")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateOfReturn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("LoanOrderId");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("LoanOrders");
-                });
-
             modelBuilder.Entity("Labb_1_Avancerat.NET.Models.Book", b =>
                 {
                     b.HasOne("Labb_1_Avancerat.NET.Models.Category", "Category")
@@ -167,21 +135,10 @@ namespace Labb_1_Avancerat.NET.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("Labb_1_Avancerat.NET.Models.LoanOrder", b =>
-                {
-                    b.HasOne("Labb_1_Avancerat.NET.Models.Book", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Labb_1_Avancerat.NET.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Labb_1_Avancerat.NET.Models.Customer", null)
+                        .WithMany("Books")
+                        .HasForeignKey("CustomerId");
                 });
 #pragma warning restore 612, 618
         }
