@@ -69,11 +69,7 @@ namespace Labb_1_Avancerat.NET.Controllers
                 }
                 else
                 {
-                    loanorder.DateOfLoan = DateTime.Now;
-                    loanorder.DateOfReturn = DateTime.Now.AddDays(15);
-                    _context.LoanOrders.Update(loanorder);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return NotFound("Something went Wrong");
                 }
             }
             return View(loanorder);

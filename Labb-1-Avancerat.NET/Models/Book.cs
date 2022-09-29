@@ -10,8 +10,7 @@ namespace Labb_1_Avancerat.NET.Models
         public string BookTitle { get; set; }
         
         public string Description { get; set; }
-       
-        
+
         public int CategoryId { get; set; }
         public Category Category { get; set; }
     }
