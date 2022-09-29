@@ -14,6 +14,5 @@ namespace Labb_1_Avancerat.NET.Models
         public string LastName { get; set; }
         [Required(ErrorMessage = "This field is required"),DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-
     }
 }

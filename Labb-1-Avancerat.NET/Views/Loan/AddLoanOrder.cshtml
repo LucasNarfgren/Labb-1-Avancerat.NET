@@ -9,17 +9,18 @@
         <form asp-action="AddLoanOrder" autocomplete="off">
             <input type="hidden" asp-for="LoanOrderId" />
 
-
             <div class="form-group">
-                <label asp-for="BookId" class="control-label"></label>
-                <input asp-for="BookId" class="form-control" />
-                <span asp-validation-for="BookId" class="text-danger"></span>
+                <label>Choose a Book</label>
+                <select asp-for="BookId">
+                    @await Component.InvokeAsync("Books")
+                </select>
             </div>
 
             <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
-                <input asp-for="CustomerId" class="form-control" />
-                <span asp-validation-for="CustomerId" class="text-danger"></span>
+                <label>Choose a Customer</label>
+                <select asp-for="CustomerId">
+                    @await Component.InvokeAsync("Customers")
+                </select>
             </div>
 
             <div class="row mt-2">

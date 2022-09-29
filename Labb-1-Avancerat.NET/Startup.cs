@@ -34,6 +34,7 @@ namespace Labb_1_Avancerat.NET
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ILoanOrderRepository, LoanOrderRepository>();
             services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
 
 
         }
