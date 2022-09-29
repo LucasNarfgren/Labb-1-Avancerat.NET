@@ -1,9 +1,11 @@
 ﻿@model LoanOrder
 
-<div class="col-md-6 offset-md-3">
-    
-    <h1>Loans</h1>
+<div class="container my-5">
+
+    <h1>Lend a Book</h1>
     <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+
+
         <form asp-action="AddLoanOrder" autocomplete="off">
             <input type="hidden" asp-for="LoanOrderId" />
 
@@ -30,7 +32,9 @@
                 <div class="col-md-6">
                     <a asp-action="Index" class="btn btn-secondary w-100">Go back</a>
                 </div>
+
             </div>
         </form>
+
     </div>
 </div>
